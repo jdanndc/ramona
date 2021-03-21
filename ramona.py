@@ -68,8 +68,9 @@ class RamonaShell(cmd.Cmd):
                 # special case, have to do this after the evaluation above
                 f['loaded'] = False
         if recalculate:
-            print(f"recalculating {f['path']}")
+            print(f"recalculating...")
             self.model.recalculate()
+            print(f"Done.")
         self.library.check_none()
         self.do_lib(None)
 
