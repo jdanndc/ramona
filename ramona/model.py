@@ -1,5 +1,5 @@
 #
-# word trigrams - third order
+# third order markov chains, word trigrams
 #
 import nltk
 import random
@@ -7,17 +7,20 @@ from collections import defaultdict
 from itertools import groupby
 import numpy as np
 
-class Ramona(object):
+class Model(object):
     # sentinel to mark beginning of sentence
     bos_sentinel = "^^^^^"
 
     def __init__(self):
+        self.reset()
+
+    def reset(self):
         self.states = None
         self.start_states = None
         self.counts = defaultdict(lambda: defaultdict(int))
-        pass
+        return self
 
-    def add_text(self, text):
+    def add_text(self, text, bos=True):
         """Process text string and fill counts dict with token trigrams
 
         :param text: a string of text to sentencize and tokenize
@@ -25,7 +28,8 @@ class Ramona(object):
         """
         for sent in nltk.sent_tokenize(text):
             tokens = nltk.word_tokenize(sent)
-            tokens.insert(0, self.bos_sentinel)
+            if bos:
+                tokens.insert(0, self.bos_sentinel)
             trigrams = sorted(list(zip(tokens, tokens[1:], tokens[2:])))  # all dimensions get sorted
             for k, g in groupby(trigrams, lambda x: (x[0], x[1])):
                 for k2, g2 in groupby(g, lambda x: x[2]):
@@ -64,15 +68,4 @@ class Ramona(object):
             iter += 1
         return out
 
-# all in one line
-#print(' '.join(Ramona().add_text(open('data/gatsby.txt').read()).recalculate().generate()))
-
-ramona = Ramona()
-ramona.add_text(open('data/ethan_frome.txt').read())
-ramona.add_text(open('data/theron_ware.txt').read())
-ramona.add_text(open('data/gatsby.txt').read())
-ramona.recalculate()
-
-for i in range(0,20):
-    print(' '.join(ramona.generate()))
 
