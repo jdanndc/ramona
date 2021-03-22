@@ -32,10 +32,10 @@ class RamonaShell(cmd.Cmd):
         'toggle selections from the library'
         for a in arg.split():
             if a == '*':
-                self.library.check_all()
+                self.library.set_all_checked(True)
                 break
             elif a == '/':
-                self.library.check_none()
+                self.library.set_all_checked(False)
                 break
             elif a.startswith('~'):
                 self.library.check_by_re(a[1:])
@@ -48,30 +48,32 @@ class RamonaShell(cmd.Cmd):
         print("\n".join(self.library.list()))
 
     def do_load(self, arg):
-        'load the checked files.  if loaded files are checked, reload only unloaded checked files'
+        'load/unload the checked files.  loaded+checked means unload, unloaded+checked means load'
         # if any file is loaded and checked, we need to unload that file
-        # which is impossible, so we need to reset and then reload all
+        # which is impossible to do, so we need to reset and then reload all
         reload = any((f['loaded'] and f['checked']) for f in self.library.files)
         if reload:
             self.model.reset()
+            for f in self.library.files:
+                if f['loaded']:
+                    # reload so:
+                    # loaded and checked become unloaded and unchecked (so will not load)
+                    # loaded and unchecked becomes unloaded and checked (so will reload)
+                    f['checked'] = not f['checked']
+                f['loaded'] = False
         recalculate = False
         for f in self.library.files:
-            # this is confusing, but makes sense
-            # just bear in mind the 'checked' means to toggle its loaded state
-            if (f['checked'] and not f['loaded']) or (reload and f['loaded'] and not f['checked']):
+            if f['checked'] and not f['loaded']:
                 print(f"loading {f['path']}")
                 ff = open(f['path'])
                 self.model.add_text(ff.read())
                 f['loaded'] = True
                 recalculate = True
-            elif reload and f['loaded'] and f['checked']:
-                # special case, have to do this after the evaluation above
-                f['loaded'] = False
         if recalculate:
             print(f"recalculating...")
             self.model.recalculate()
             print(f"Done.")
-        self.library.check_none()
+        self.library.set_all_checked(False)
         self.do_lib(None)
 
     def do_reset(self, arg):

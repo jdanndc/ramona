@@ -41,13 +41,13 @@ class Library(object):
         if i > 0 and i < len(self.files):
             self.files[i]['checked'] = True
 
-    def check_all(self):
+    def set_all_checked(self, val: bool):
         for d in self.files:
-            d['checked'] = True
+            d['checked'] = val
 
-    def check_none(self):
+    def set_all_loaded(self, val: bool):
         for d in self.files:
-            d['checked'] = False
+            d['loaded'] = val
 
     def check_by_re(self, regex):
         p = re.compile(regex)
@@ -55,8 +55,7 @@ class Library(object):
             d['checked'] = p.match(d['name'])
 
     def reset(self):
-        for d in self.files:
-            d['loaded'] = False
-            d['checked'] = False
+        self.set_all_loaded(False)
+        self.set_all_checked(False)
 
 

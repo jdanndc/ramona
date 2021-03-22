@@ -8,7 +8,7 @@ Would turn into a meaningless ring_
 
 ## Quickstart
 
-*  see the file [demo_ramona.ipynb](demo_ramona.ipynb)
+*  see the file [demo_ramona.ipynb](demo_markov.ipynb)
     * presents the theory and implementation details.
 * see the file [ramona/model.py](ramona/model.py) for the NLP full implementation
     * uses NLTK, which needs *punkt* installed
@@ -34,7 +34,7 @@ http://people.math.harvard.edu/~ctm/home/text/others/shannon/entropy/entropy.pdf
 
 
 ## Implementation
-*  see the file [demo_ramona.ipynb](demo_ramona.ipynb)
+*  see the file [demo_ramona.ipynb](demo_markov.ipynb)
 * see the file [ramona/model.py](ramona/model.py) for the NLP full implementation
 
 ## Setup
