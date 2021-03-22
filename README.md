@@ -6,6 +6,17 @@ Would turn into a meaningless ring_
 
 -- Bob Dylan, _To Ramona_
 
+## About
+
+ramona is an educational tool to demonstrate the use of Markov Chains to generate sentences.
+The system includes a model, a library and a command shell interface.
+
+The model [ramona/model.py](ramona/model.py) uses a two pass process to create trigram based markov chains.
+
+The library [ramona/library.py](ramona/library.py) helps organize and select text language files for loading.
+
+The command shell [ramona.py](ramona.py) creates an interactive exploratory environment.
+
 ## Quickstart
 
 *  see the file [demo_ramona.ipynb](demo_markov.ipynb)
