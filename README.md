@@ -19,8 +19,10 @@ The command shell [ramona.py](ramona.py) creates an interactive exploratory envi
 
 ## Quickstart
 
-*  see the file [demo_ramona.ipynb](demo_markov.ipynb)
+*  see the file [demo_markov.ipynb](demo_markov.ipynb)
     * presents the theory and implementation details.
+*  see the file [demo_ramona.ipynb](demo_ramona.ipynb)
+    * shows a notebook that builds various models and then generates English sentences
 * see the file [ramona/model.py](ramona/model.py) for the NLP full implementation
     * uses NLTK, which needs *punkt* installed
 * run the interactive command interface [ramona.py](ramona.py)
